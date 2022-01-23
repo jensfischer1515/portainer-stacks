@@ -1,5 +1,18 @@
 version: '3.8'
 
+networks:
+  vlan10:
+    name: vlan10
+    driver: macvlan
+    driver_opts:
+    parent: ovs_eth1
+    ipam:
+      config:
+      - subnet: 192.168.10.0/24
+        ip_range: 192.168.10.60/32
+        gateway: 192.168.10.1
+
+
 #docker service create \
 #    --name dashmachine \
 #    --publish 8080:5000/tcp \
@@ -12,9 +25,8 @@ services:
   dashmachine:
     image: "rmountjoy/dashmachine:develop"
     restart: "always"
-    network_mode: "bridge"
-    ports:
-    - "8080:5000/tcp"
+    network:
+      vlan10
     environment:
     - TZ=Europe/Berlin
     volumes:
