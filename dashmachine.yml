@@ -2,7 +2,6 @@ version: '3'
 
 networks:
   vlan10:
-    name: vlan10
     driver: macvlan
     driver_opts:
       parent: ovs_eth1
