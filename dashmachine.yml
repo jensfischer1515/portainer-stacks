@@ -1,0 +1,21 @@
+version: '3.8'
+
+#docker service create \
+#    --name dashmachine \
+#    --publish 8080:5000/tcp \
+#    --replicas=1 \
+#    --env TZ=Europe/Berlin \
+#    --mount type=bind,src=/volume1/docker/dashmachine,dst=/dashmachine/dashmachine/user_data \
+#    rmountjoy/dashmachine:develop
+
+services:
+  dashmachine:
+    image: "rmountjoy/dashmachine:develop"
+    restart: "always"
+    network_mode: "bridge"
+    ports:
+    - "8080:5000/tcp"
+    environment:
+    - TZ=Europe/Berlin
+    volumes:
+    - /volume1/docker/dashmachine:/dashmachine/dashmachine/user_data
