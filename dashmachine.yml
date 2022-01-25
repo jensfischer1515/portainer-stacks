@@ -1,34 +1,18 @@
-version: '2.1'
+version: '3.8'
 
 networks:
-  vlan10:
-    driver: macvlan
-    driver_opts:
-      parent: ovs_eth1
-    ipam:
-      config:
-        - subnet: 192.168.10.0/24
-          ip_range: 192.168.10.60/32
-          gateway: 192.168.10.1
-
-
-#docker service create \
-#    --name dashmachine \
-#    --publish 8080:5000/tcp \
-#    --replicas=1 \
-#    --env TZ=Europe/Berlin \
-#    --mount type=bind,src=/volume1/docker/dashmachine,dst=/dashmachine/dashmachine/user_data \
-#    rmountjoy/dashmachine:develop
+  192-168-10-64-net:
+    external: true
 
 services:
   dashmachine:
     image: "rmountjoy/dashmachine:develop"
     restart: "always"
     networks:
-      - vlan10
+      - 192-168-10-64-net
     environment:
       - TZ=Europe/Berlin
     volumes:
       - /volume1/docker/dashmachine:/dashmachine/dashmachine/user_data
-    cap_add:
-      - NET_ADMIN
+#    cap_add:
+#      - NET_ADMIN
